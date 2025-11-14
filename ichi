@@ -1,0 +1,55 @@
+1a:
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
+doc1 = "Machine learning is amazing and fun"
+doc2 = "Deep learning and machine learning are parts of artificial intelligence"
+documents = [doc1, doc2]
+vectorizer = TfidfVectorizer()
+tfidf_matrix = vectorizer.fit_transform(documents)
+print("Vocabulary:", vectorizer.get_feature_names_out())
+print("\nTF-IDF Matrix:")
+print(tfidf_matrix.toarray())
+similarity = cosine_similarity(tfidf_matrix[0:1], tfidf_matrix[1:2])
+print("\nCosine Similarity between doc1 and doc2:", similarity[0][0])
+
+
+1b:
+
+import nltk
+from nltk.corpus import stopwords
+from nltk.tokenize import word_tokenize
+from nltk.stem import PorterStemmer
+
+nltk.download('punkt')
+nltk.download('stopwords')
+
+def preprocess_text(text):
+    # Convert text to lowercase
+    text = text.lower()
+    
+    # Tokenize the text
+    words = word_tokenize(text)
+    
+    # Remove stopwords and non-alphanumeric words
+    stop_words = set(stopwords.words('english'))
+    filtered_words = [word for word in words if word.isalnum() and word not in stop_words]
+    
+    # Apply stemming
+    stemmer = PorterStemmer()
+    stemmed_words = [stemmer.stem(word) for word in filtered_words]
+    
+    return stemmed_words
+
+text = "Machine learning algorithms are revolutionizing the world of artificial intelligence."
+
+
+print("Original Text:", text)
+
+
+processed = preprocess_text(text)
+
+processed_text = ' '.join(processed)
+
+
+print("Processed Text:", processed_text)
+print("Preprocessed Words:", processed)
